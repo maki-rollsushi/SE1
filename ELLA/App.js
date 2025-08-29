@@ -52,14 +52,16 @@ export default function App() {
           style={styles.iconGoogle}
           source={require("./assets/icons/google.png")}
         />
-        <Text style={(styles.buttonText, styles.google)}>
+        <Text style={[styles.buttonText, styles.google]}>
           Sign in with Google
         </Text>
       </TouchableOpacity>
       <View style={styles.signUp}>
         <Text style={styles.signUpText}>No Account? </Text>
         <TouchableOpacity>
-          <Text style={styles.signUpText}>Sign Up!</Text>
+          <Text style={[styles.signUpText, styles.signUpTextUnderline]}>
+            Sign Up!
+          </Text>
         </TouchableOpacity>
       </View>
 
@@ -146,5 +148,8 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: "#FFF",
     marginTop: 20,
+  },
+  signUpTextUnderline: {
+    textDecorationLine: "underline",
   },
 });
