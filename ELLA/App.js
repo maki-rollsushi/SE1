@@ -2,6 +2,8 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import StartUp from "./Screen/StartUp";
 import SignUp from "./Screen/SignUp";
+import NameEntry from "./Screen/NameEntry";
+import RoleSelect from "./Screen/roleSelect";
 
 const Stack = createNativeStackNavigator();
 
@@ -14,6 +16,8 @@ export default function App() {
       >
         <Stack.Screen name="StartUp" component={StartUp} />
         <Stack.Screen name="SignUp" component={SignUp} />
+        <Stack.Screen name="NameEntry" component={NameEntry} />
+        <Stack.Screen name="RoleSelect" component={RoleSelect} />
       </Stack.Navigator>
     </NavigationContainer>
   );

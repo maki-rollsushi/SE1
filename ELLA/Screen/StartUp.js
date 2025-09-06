@@ -11,6 +11,7 @@ export default function StartUp({ navigation }) {
     PixelifySansBold: require("../assets/fonts/PixelifySans-Bold.ttf"),
     Poppins: require("../assets/fonts/Poppins-Regular.ttf"),
     PoppinsBold: require("../assets/fonts/Poppins-Bold.ttf"),
+    Mochi: require("../assets/fonts/MochiyPopOne.ttf"),
   });
 
   navigation = useNavigation();
@@ -23,6 +24,7 @@ export default function StartUp({ navigation }) {
   const handleEmailSignIn = () => {
     // TODO: Add email sign-in gagawin ni Vik
     console.log("Email Sign");
+    navigation.navigate("NameEntry");
   };
 
   const handleGoogleSignIn = () => {
