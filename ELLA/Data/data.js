@@ -4,7 +4,7 @@ export const users = [
     name: "Ella Dela Cruz",
     role: "student",
     character: "owl",
-    currentPoints: 200,
+    points: 200,
     progress: [
       { bookId: 1, sentencesRead: 3, totalSentences: 5 },
       { bookId: 2, sentencesRead: 1, totalSentences: 5 },
@@ -15,7 +15,7 @@ export const users = [
     name: "Mark Santos",
     role: "teacher",
     character: "dino",
-    currentPoints: 500,
+    points: 500,
     progress: [
       { bookId: 1, sentencesRead: 5, totalSentences: 5 },
       { bookId: 3, sentencesRead: 5, totalSentences: 5 },
@@ -26,7 +26,7 @@ export const users = [
     name: "Lara Gomez",
     role: "student",
     character: "pink",
-    currentPoints: 90,
+    points: 90,
     progress: [{ bookId: 2, sentencesRead: 2, totalSentences: 5 }],
   },
 ];
@@ -34,7 +34,7 @@ export const users = [
 export const books = [
   {
     bookId: 1,
-    bookTitle: "The Brave Little Owl",
+    title: "The Brave Little Owl",
     writer: "Anna Reyes",
     publisher: "BU Isarog Publishing",
     difficulty: "Beginner",
@@ -47,10 +47,11 @@ export const books = [
       "In the end, she found her mother and learned that the night was not scary after all.",
     ],
     sentenceCount: 5,
+    cover: "https://picsum.photos/seed/redball/400/250",
   },
   {
     bookId: 2,
-    bookTitle: "Dino’s First Day at School",
+    title: "Dino’s First Day at School",
     writer: "Carlos Lim",
     publisher: "Student Uploads",
     difficulty: "Intermediate",
@@ -63,10 +64,11 @@ export const books = [
       "Dino realized that learning can be fun!",
     ],
     sentenceCount: 5,
+    cover: "https://picsum.photos/seed/redball/400/250",
   },
   {
     bookId: 3,
-    bookTitle: "Pink Learns to Fly",
+    title: "Pink Learns to Fly",
     writer: "Mr. Rivera",
     publisher: "Teacher Upload",
     difficulty: "Advanced",
@@ -79,5 +81,6 @@ export const books = [
       "When she flew over the mountains, she felt free and proud.",
     ],
     sentenceCount: 5,
+    cover: "https://picsum.photos/seed/redball/400/250",
   },
 ];
