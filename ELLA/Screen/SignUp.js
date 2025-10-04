@@ -17,6 +17,21 @@ export default function SignUp() {
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
 
+  //custom functions:
+  const handleEmailSignIn = () => {
+    // TODO: Add email sign-in gagawin ni Vik
+    console.log("Email Sign");
+    navigation.navigate("NameEntry");
+  };
+
+  const handleGoogleSignIn = () => {
+    // TODO: Add Google sign-in
+    console.log("Google Sign");
+    navigation.navigate("NameEntry");
+  };
+
+
+
   return (
     <View style={styles.container}>
       {/* Close button (X) */}
@@ -60,7 +75,7 @@ export default function SignUp() {
       </View>
 
       {/* Email Sign Up button */}
-      <TouchableOpacity style={styles.buttonEmail}>
+      <TouchableOpacity style={styles.buttonEmail} onPress={() => setShowPassword(!showPassword)}>
         <Ionicons name="mail" size={32} color="#fff" style={styles.icon} />
         <Text style={styles.buttonText}>Sign Up</Text>
       </TouchableOpacity>

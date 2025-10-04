@@ -4,6 +4,7 @@ import StartUp from "./Screen/StartUp";
 import SignUp from "./Screen/SignUp";
 import NameEntry from "./Screen/NameEntry";
 import RoleSelect from "./Screen/roleSelect";
+import HomeScreen from "./Screen/HomeScreen";
 
 const Stack = createNativeStackNavigator();
 
@@ -18,6 +19,7 @@ export default function App() {
         <Stack.Screen name="SignUp" component={SignUp} />
         <Stack.Screen name="NameEntry" component={NameEntry} />
         <Stack.Screen name="RoleSelect" component={RoleSelect} />
+        <Stack.Screen name="HomeScreen" component={HomeScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );

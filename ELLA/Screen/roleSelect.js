@@ -34,6 +34,12 @@ export default function SignUp() {
       <Text style={styles.title}>Are you a?</Text>
 
       {/* Role Buttons */}
+      <Image
+        source={require("../assets/animations/jump_pink.gif")}
+        style={styles.gif}
+        contentFit="fill"
+        transition={0}
+      />
       <TouchableOpacity
         style={styles.button}
         onPress={() => saveRole("Student")}

@@ -16,7 +16,8 @@ export default function SignUp() {
   const [name, setName] = useState("");
 
   const handleNameEntry = () => {
-    console.log("Name entered:", name); //for backend
+    //for backend go Vik!
+    console.log("Name entered:", name);
     navigation.navigate("RoleSelect");
   };
 
@@ -43,6 +44,7 @@ export default function SignUp() {
   );
 }
 
+//Styling
 const styles = StyleSheet.create({
   container: {
     flex: 1,

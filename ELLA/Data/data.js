@@ -1,0 +1,83 @@
+export const users = [
+  {
+    accountId: 1,
+    name: "Ella Dela Cruz",
+    role: "student",
+    character: "owl",
+    currentPoints: 200,
+    progress: [
+      { bookId: 1, sentencesRead: 3, totalSentences: 5 },
+      { bookId: 2, sentencesRead: 1, totalSentences: 5 },
+    ],
+  },
+  {
+    accountId: 2,
+    name: "Mark Santos",
+    role: "teacher",
+    character: "dino",
+    currentPoints: 500,
+    progress: [
+      { bookId: 1, sentencesRead: 5, totalSentences: 5 },
+      { bookId: 3, sentencesRead: 5, totalSentences: 5 },
+    ],
+  },
+  {
+    accountId: 3,
+    name: "Lara Gomez",
+    role: "student",
+    character: "pink",
+    currentPoints: 90,
+    progress: [{ bookId: 2, sentencesRead: 2, totalSentences: 5 }],
+  },
+];
+
+export const books = [
+  {
+    bookId: 1,
+    bookTitle: "The Brave Little Owl",
+    writer: "Anna Reyes",
+    publisher: "BU Isarog Publishing",
+    difficulty: "Beginner",
+    source: "app",
+    contents: [
+      "Once upon a time, there was a little owl who was afraid of the dark.",
+      "Every night, she stayed close to her mother and refused to fly.",
+      "One day, her mother got lost, and the little owl had to be brave.",
+      "She flew through the dark forest, guided by the stars.",
+      "In the end, she found her mother and learned that the night was not scary after all.",
+    ],
+    sentenceCount: 5,
+  },
+  {
+    bookId: 2,
+    bookTitle: "Dino’s First Day at School",
+    writer: "Carlos Lim",
+    publisher: "Student Uploads",
+    difficulty: "Intermediate",
+    source: "user",
+    contents: [
+      "Dino woke up early for his first day of school.",
+      "He packed his bag and wore his favorite green cap.",
+      "At first, he felt nervous, but his new friends made him smile.",
+      "He learned to read, count, and share with others.",
+      "Dino realized that learning can be fun!",
+    ],
+    sentenceCount: 5,
+  },
+  {
+    bookId: 3,
+    bookTitle: "Pink Learns to Fly",
+    writer: "Mr. Rivera",
+    publisher: "Teacher Upload",
+    difficulty: "Advanced",
+    source: "teacher",
+    contents: [
+      "Pink always dreamed of soaring high above the clouds.",
+      "But every time she tried, she stumbled and fell.",
+      "Her teacher told her that learning to fly takes practice.",
+      "Pink practiced every day until she could finally lift off.",
+      "When she flew over the mountains, she felt free and proud.",
+    ],
+    sentenceCount: 5,
+  },
+];

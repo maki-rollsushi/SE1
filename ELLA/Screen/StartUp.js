@@ -24,12 +24,13 @@ export default function StartUp({ navigation }) {
   const handleEmailSignIn = () => {
     // TODO: Add email sign-in gagawin ni Vik
     console.log("Email Sign");
-    navigation.navigate("NameEntry");
+    navigation.navigate("HomeScreen");
   };
 
   const handleGoogleSignIn = () => {
     // TODO: Add Google sign-in
     console.log("Google Sign");
+    navigation.navigate("HomeScreen");
   };
 
   return (
