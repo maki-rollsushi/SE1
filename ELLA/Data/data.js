@@ -2,7 +2,7 @@ export const users = [
   {
     accountId: 1,
     name: "Ella Dela Cruz",
-    role: "student",
+    role: "Student",
     character: "owl",
     points: 200,
     progress: [
@@ -13,7 +13,7 @@ export const users = [
   {
     accountId: 2,
     name: "Mark Santos",
-    role: "teacher",
+    role: "Teacher",
     character: "dino",
     points: 500,
     progress: [
@@ -24,7 +24,7 @@ export const users = [
   {
     accountId: 3,
     name: "Lara Gomez",
-    role: "student",
+    role: "Student",
     character: "pink",
     points: 90,
     progress: [{ bookId: 2, sentencesRead: 2, totalSentences: 5 }],
@@ -72,7 +72,7 @@ export const books = [
     writer: "Mr. Rivera",
     publisher: "Teacher Upload",
     difficulty: "Advanced",
-    source: "teacher",
+    source: "Teacher",
     contents: [
       "Pink always dreamed of soaring high above the clouds.",
       "But every time she tried, she stumbled and fell.",
