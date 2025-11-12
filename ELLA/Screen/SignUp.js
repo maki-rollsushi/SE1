@@ -30,8 +30,6 @@ export default function SignUp() {
     navigation.navigate("NameEntry");
   };
 
-
-
   return (
     <View style={styles.container}>
       {/* Close button (X) */}
@@ -75,18 +73,24 @@ export default function SignUp() {
       </View>
 
       {/* Email Sign Up button */}
-      <TouchableOpacity style={styles.buttonEmail} onPress={() => setShowPassword(!showPassword)}>
+      {/* Email Sign Up button */}
+      <TouchableOpacity style={styles.buttonEmail} onPress={handleEmailSignIn}>
         <Ionicons name="mail" size={32} color="#fff" style={styles.icon} />
         <Text style={styles.buttonText}>Sign Up</Text>
       </TouchableOpacity>
 
-      <TouchableOpacity style={styles.buttonGoogle}>
+      {/* Google Sign Up button */}
+      <TouchableOpacity
+        style={styles.buttonGoogle}
+        onPress={handleGoogleSignIn}
+      >
         <Image
           style={styles.iconGoogle}
           source={require("../assets/icons/google.png")}
         />
         <Text style={[styles.buttonText, styles.googleText]}>Sign Up</Text>
       </TouchableOpacity>
+
       <Image
         source={require("../assets/animations/jump_owl.gif")}
         style={styles.gif}

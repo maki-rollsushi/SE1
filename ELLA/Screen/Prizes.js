@@ -78,6 +78,143 @@ export default function Prizes() {
             Prizes
           </Text>
         </TouchableOpacity>
+        {/* Navigation Menu Modal */}
+        <Modal
+          visible={isMenuOpen}
+          transparent={true}
+          animationType="none"
+          onRequestClose={() => handleMenuPress()}
+        >
+          <View style={styles.modalOverlay}>
+            <TouchableOpacity
+              style={styles.modalBackground}
+              activeOpacity={1}
+              onPress={() => handleMenuPress()}
+            />
+            <Animated.View
+              style={[
+                styles.menuContainer,
+                { transform: [{ translateX: slideAnim }] },
+              ]}
+            >
+              <View style={styles.titleSection}>
+                <Text style={styles.menuTitle}>ELLA</Text>
+                <Text style={styles.menuSubtitle}>Your English Buddy</Text>
+              </View>
+
+              <View style={styles.spacing} />
+
+              <View style={styles.horizontalLine} />
+
+              <TouchableOpacity
+                style={[styles.userSection, { paddingHorizontal: 20 }]}
+                onPress={() => {
+                  // User settings logic will be added later
+                  console.log("User settings pressed");
+                }}
+              >
+                <View style={styles.userSettings}>
+                  <Image
+                    source={characterImages[currUser.character]}
+                    style={styles.userAvatar}
+                  />
+                </View>
+                <View style={styles.userInfo}>
+                  <Text style={styles.userName}>{currUser.name}</Text>
+                  <Text style={styles.userRole}>{currUser.role}</Text>
+                </View>
+              </TouchableOpacity>
+
+              <View style={styles.horizontalLine} />
+
+              <TouchableOpacity
+                style={styles.menuButton}
+                onPress={() => {
+                  console.log("Settings pressed");
+                }}
+              >
+                <Ionicons name="settings-outline" size={24} color="#333" />
+                <Text style={styles.menuButtonText}>Settings</Text>
+              </TouchableOpacity>
+
+              <TouchableOpacity
+                style={styles.menuButton}
+                onPress={() => {
+                  console.log("Enroll to class pressed");
+                }}
+              >
+                <Ionicons name="add-circle-outline" size={24} color="#333" />
+                <Text style={styles.menuButtonText}>Enroll to class</Text>
+              </TouchableOpacity>
+
+              <TouchableOpacity
+                style={styles.menuButton}
+                onPress={() => {
+                  console.log("Contact us pressed");
+                }}
+              >
+                <Ionicons name="chatbubble-outline" size={24} color="#333" />
+                <Text style={styles.menuButtonText}>Contact us</Text>
+              </TouchableOpacity>
+
+              <View style={styles.horizontalLine} />
+
+              <TouchableOpacity
+                style={styles.menuButton}
+                onPress={() => {
+                  console.log("About ELLA pressed");
+                }}
+              >
+                <Ionicons name="people-outline" size={24} color="#333" />
+                <Text style={styles.menuButtonText}>About ELLA</Text>
+              </TouchableOpacity>
+
+              <View style={styles.exitButtonContainer}>
+                <TouchableOpacity
+                  style={styles.exitButton}
+                  onPress={() => setIsExitDialogOpen(true)}
+                >
+                  <Ionicons name="exit-outline" size={16} color="#fff" />
+                  <Text style={styles.exitButtonText}>Exit</Text>
+                </TouchableOpacity>
+              </View>
+            </Animated.View>
+          </View>
+        </Modal>
+
+        {/* Exit Confirmation Dialog */}
+        <Modal
+          visible={isExitDialogOpen}
+          transparent={true}
+          animationType="fade"
+          onRequestClose={handleExitDialogClose}
+        >
+          <View style={styles.exitDialogOverlay}>
+            <View style={styles.exitDialogContainer}>
+              <Text style={styles.exitDialogTitle}>Stop Reading?</Text>
+
+              <View style={styles.exitDialogButtons}>
+                <TouchableOpacity
+                  style={styles.exitDialogButtonYes}
+                  onPress={handleExitApp}
+                >
+                  <Ionicons name="checkmark" size={20} color="#fff" />
+                  <Text style={styles.exitDialogButtonText}>Yes</Text>
+                </TouchableOpacity>
+
+                <TouchableOpacity
+                  style={styles.exitDialogButtonNo}
+                  onPress={handleExitDialogClose}
+                >
+                  <Ionicons name="close" size={20} color="#fff" />
+                  <Text style={styles.exitDialogButtonText} color="#fff">
+                    No
+                  </Text>
+                </TouchableOpacity>
+              </View>
+            </View>
+          </View>
+        </Modal>
       </View>
     </View>
   );
@@ -96,7 +233,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     width: "100%",
     backgroundColor: "#60B5FF",
-    paddingVertical: 20,
+    paddingVertical: 15,
     paddingHorizontal: 20,
     marginBottom: 30,
   },

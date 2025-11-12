@@ -317,14 +317,14 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     justifyContent: "flex-start",
-    paddingTop: 50,
+    paddingTop: 15,
   },
   overlay: {
     flex: 1,
     backgroundColor: "rgba(96, 181, 255, 0.85)", // optional blue overlay for readability
     width: "100%",
     alignItems: "center",
-    paddingTop: 50,
+    paddingTop: 40,
   },
   header: {
     flexDirection: "row",

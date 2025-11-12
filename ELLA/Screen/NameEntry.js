@@ -7,29 +7,33 @@ import {
   StyleSheet,
 } from "react-native";
 
-import { Image } from "expo-image";
 import { Ionicons } from "@expo/vector-icons";
+import { Image } from "expo-image";
 import { useNavigation } from "@react-navigation/native";
 
 export default function SignUp() {
   const navigation = useNavigation();
   const [name, setName] = useState("");
+  
 
   const handleNameEntry = () => {
-    //for backend go Vik!
     console.log("Name entered:", name);
-    navigation.navigate("RoleSelect");
+    //backend part of saving a user's name.
+    navigation.navigate("RoleSelect", { userName: name });
   };
 
   return (
     <View style={styles.container}>
+      {/* Close button */}
       <TouchableOpacity
         style={styles.closeButton}
         onPress={() => navigation.goBack()}
       >
         <Ionicons name="close" size={32} color="#fff" />
       </TouchableOpacity>
+
       <Text style={styles.title}>What's your {"\n"} Name?</Text>
+
       <TextInput
         style={styles.input}
         placeholder="Name"
@@ -37,14 +41,21 @@ export default function SignUp() {
         value={name}
         onChangeText={setName}
       />
+
       <TouchableOpacity style={styles.button} onPress={handleNameEntry}>
         <Text style={styles.buttonText}>Enter</Text>
       </TouchableOpacity>
+      <Image
+        source={require("../assets/animations/jump_dino.gif")}
+        style={styles.gif}
+        contentFit="fill"
+        transition={0}
+      />
     </View>
   );
 }
 
-//Styling
+// Styling
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -74,16 +85,23 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   button: {
-    backgroundColor: "#fff",
+    backgroundColor: "#FF9149",
     paddingVertical: 12,
     paddingHorizontal: 40,
     borderRadius: 15,
     alignItems: "center",
+    borderWidth: 2,
+    borderColor: "#fff",
   },
   buttonText: {
     fontFamily: "Poppins",
     fontSize: 18,
-    color: "#60B5FF",
+    color: "#fff",
     fontWeight: "bold",
+  },
+  gif: {
+    width: 150,
+    height: 150,
+    marginTop: 60,
   },
 });

@@ -1,23 +1,33 @@
 import React, { useState } from "react";
 import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
-
 import { Image } from "expo-image";
 import { Ionicons } from "@expo/vector-icons";
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, useRoute } from "@react-navigation/native";
+import { useFonts } from "expo-font";
 
-export default function SignUp() {
+export default function RoleSelect() {
   const navigation = useNavigation();
+  const route = useRoute();
+  const { userName } = route.params;
   const [role, setRole] = useState(null);
 
-  const saveRole = (selectedRole) => {
-    setRole(selectedRole);
-    // backend save
-    console.log("Role selected:", selectedRole);
-  };
+  // Load fonts
+  const [fontsLoaded] = useFonts({
+    PixelifySans: require("../assets/fonts/PixelifySans-Regular.ttf"),
+    PixelifySansBold: require("../assets/fonts/PixelifySans-Bold.ttf"),
+    Poppins: require("../assets/fonts/Poppins-Regular.ttf"),
+    PoppinsBold: require("../assets/fonts/Poppins-Bold.ttf"),
+    Mochi: require("../assets/fonts/MochiyPopOne.ttf"),
+  });
 
-  const getRole = () => {
-    // later: return role value
-    return role;
+  if (!fontsLoaded) {
+    return null; // Wait for fonts to load
+  }
+
+  const handleRole = (selectedRole) => {
+    setRole(selectedRole);
+    console.log("Role selected:", selectedRole, userName);
+    navigation.navigate("AvatarSelect", { userName, role: selectedRole });
   };
 
   return (
@@ -33,30 +43,42 @@ export default function SignUp() {
       {/* Title */}
       <Text style={styles.title}>Are you a?</Text>
 
-      {/* Role Buttons */}
-      <Image
-        source={require("../assets/animations/jump_pink.gif")}
-        style={styles.gif}
-        contentFit="fill"
-        transition={0}
-      />
-      <TouchableOpacity
-        style={styles.button}
-        onPress={() => saveRole("Student")}
-      >
-        <Text style={styles.buttonText}>Student</Text>
-      </TouchableOpacity>
+      {/* Role Icons */}
+      <View style={styles.rolesContainer}>
+        {/* Student */}
+        <TouchableOpacity
+          style={styles.roleCircle}
+          onPress={() => handleRole("Student")}
+        >
+          <Image
+            source={require("../assets/animations/student.gif")}
+            style={styles.roleGif}
+            contentFit="cover"
+          />
+        </TouchableOpacity>
+        <Text style={styles.roleLabel}>Student</Text>
 
-      <TouchableOpacity
-        style={styles.button}
-        onPress={() => saveRole("Teacher")}
-      >
-        <Text style={styles.buttonText}>Teacher</Text>
-      </TouchableOpacity>
+        {/* Spacing between icons */}
+        <View style={{ height: 60 }} />
+
+        {/* Teacher */}
+        <TouchableOpacity
+          style={styles.roleCircle}
+          onPress={() => handleRole("Teacher")}
+        >
+          <Image
+            source={require("../assets/animations/teacher.gif")}
+            style={styles.roleGif}
+            contentFit="cover"
+          />
+        </TouchableOpacity>
+        <Text style={styles.roleLabel}>Teacher</Text>
+      </View>
     </View>
   );
 }
 
+// Styling
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -73,21 +95,35 @@ const styles = StyleSheet.create({
     fontFamily: "Mochi",
     fontSize: 36,
     textAlign: "center",
-    margin: 50,
+    marginBottom: 40,
     color: "#fff",
   },
-  button: {
-    backgroundColor: "#fff",
-    paddingVertical: 12,
-    paddingHorizontal: 40,
-    borderRadius: 15,
-    alignItems: "center",
-    marginVertical: 10,
+  gif: {
+    width: 150,
+    height: 150,
+    marginBottom: 30,
   },
-  buttonText: {
-    fontFamily: "Poppins",
-    fontSize: 18,
-    color: "#60B5FF",
-    fontWeight: "bold",
+  rolesContainer: {
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  roleCircle: {
+    width: 120,
+    height: 120,
+    borderRadius: 100,
+    backgroundColor: "#fff",
+    alignItems: "center",
+    justifyContent: "center",
+    overflow: "visible",
+  },
+  roleGif: {
+    width: 45,
+    height: "60%",
+  },
+  roleLabel: {
+    fontFamily: "PixelifySans",
+    fontSize: 24,
+    color: "#fff",
+    marginTop: 10,
   },
 });
