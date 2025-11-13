@@ -4,11 +4,11 @@
     "slug": "ELLA",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icons/google.png",
+    "icon": "./assets/icons/ELLA_LOGO.png",
     "userInterfaceStyle": "light",
     "newArchEnabled": true,
     "splash": {
-      "image": "./assets/icons/google.png",
+      "image": "./assets/icons/ELLA_LOGO.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
@@ -17,13 +17,13 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/icons/google.png",
+        "foregroundImage": "./assets/icons/ELLA_LOGO.png",
         "backgroundColor": "#ffffff"
       },
       "edgeToEdgeEnabled": true
     },
     "web": {
-      "favicon": "./assets/icons/google.png"
+      "favicon": "./assets/icons/ELLA_LOGO.png"
     },
     "plugins": ["expo-font"]
   }

@@ -9,6 +9,8 @@ import SignUp from "./Screen/SignUp";
 import NameEntry from "./Screen/NameEntry";
 import RoleSelect from "./Screen/roleSelect";
 import HomeScreen from "./Screen/HomeScreen";
+import AvatarSelect from "./Screen/avatarSelect";
+import AvatarName from "./Screen/AvatarName";
 import Prizes from "./Screen/Prizes";
 
 const Stack = createNativeStackNavigator();
@@ -38,6 +40,8 @@ export default function App() {
             <Stack.Screen name="SignUp" component={SignUp} />
             <Stack.Screen name="NameEntry" component={NameEntry} />
             <Stack.Screen name="RoleSelect" component={RoleSelect} />
+            <Stack.Screen name="AvatarSelect" component={AvatarSelect} />
+            <Stack.Screen name="AvatarName" component={AvatarName} />
             <Stack.Screen name="HomeScreen" component={HomeScreen} />
             <Stack.Screen name="Prizes" component={Prizes} />
           </Stack.Navigator>

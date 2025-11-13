@@ -26,6 +26,7 @@ export default function SignUp() {
 
   const handleGoogleSignIn = () => {
     // TODO: Add Google sign-in
+    
     console.log("Google Sign");
     navigation.navigate("NameEntry");
   };
@@ -37,7 +38,7 @@ export default function SignUp() {
         style={styles.closeButton}
         onPress={() => navigation.goBack()}
       >
-        <Ionicons name="close" size={32} color="#fff" />
+        <Ionicons name="arrow-back" size={32} color="#fff" />
       </TouchableOpacity>
 
       <Text style={styles.title}>Enter your details</Text>

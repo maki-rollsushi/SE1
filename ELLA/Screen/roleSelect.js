@@ -8,7 +8,7 @@ import { useFonts } from "expo-font";
 export default function RoleSelect() {
   const navigation = useNavigation();
   const route = useRoute();
-  const { userName } = route.params;
+  const { userName } = route.params || {};
   const [role, setRole] = useState(null);
 
   // Load fonts
@@ -27,6 +27,9 @@ export default function RoleSelect() {
   const handleRole = (selectedRole) => {
     setRole(selectedRole);
     console.log("Role selected:", selectedRole, userName);
+
+    //backend part to save role. Go Vik!
+
     navigation.navigate("AvatarSelect", { userName, role: selectedRole });
   };
 
@@ -37,7 +40,7 @@ export default function RoleSelect() {
         style={styles.closeButton}
         onPress={() => navigation.goBack()}
       >
-        <Ionicons name="close" size={32} color="#fff" />
+        <Ionicons name="arrow-back" size={32} color="#fff" />
       </TouchableOpacity>
 
       {/* Title */}

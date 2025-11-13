@@ -1,10 +1,18 @@
 import React, { useState } from "react";
-import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+  Animated,
+  Modal,
+} from "react-native";
 import { useFonts } from "expo-font";
 import { Ionicons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 import { Image } from "expo-image";
 import { users } from "../Data/data";
+import Sidebar from "../components/Sidebar"; // import your Sidebar component
 
 export default function Prizes() {
   const [fontsLoaded] = useFonts({
@@ -17,6 +25,9 @@ export default function Prizes() {
 
   const navigation = useNavigation();
   const currUser = users[0];
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isExitDialogOpen, setIsExitDialogOpen] = useState(false);
+  const slideAnim = useState(new Animated.Value(-300))[0]; // starting X value
 
   const characterImages = {
     pink: require("../assets/animations/jump_pink.gif"),
@@ -24,11 +35,33 @@ export default function Prizes() {
     owl: require("../assets/animations/jump_owl.gif"),
   };
 
+  const handleMenuPress = () => {
+    if (isMenuOpen) {
+      Animated.timing(slideAnim, {
+        toValue: -300,
+        duration: 200,
+        useNativeDriver: true,
+      }).start(() => setIsMenuOpen(false));
+    } else {
+      setIsMenuOpen(true);
+      Animated.timing(slideAnim, {
+        toValue: 0,
+        duration: 200,
+        useNativeDriver: true,
+      }).start();
+    }
+  };
+
+  const handleExitDialogClose = () => setIsExitDialogOpen(false);
+  const handleExitApp = () => console.log("Exiting app...");
+
   return (
     <View style={styles.container}>
       <View style={styles.header}>
         <TouchableOpacity
-          onPress={() => navigation.goBack()}
+          onPress={() => {
+            handleMenuPress() ;
+          }}
           style={styles.avatarContainer}
         >
           <Image
@@ -54,6 +87,16 @@ export default function Prizes() {
         <Text style={styles.contentText}>Prizes content coming soon!</Text>
       </View>
 
+      {/* Sidebar Component */}
+      <Sidebar
+        isMenuOpen={isMenuOpen}
+        slideAnim={slideAnim}
+        handleMenuPress={handleMenuPress}
+        currUser={currUser}
+        characterImages={characterImages}
+        setIsExitDialogOpen={setIsExitDialogOpen}
+      />
+
       {/* Footer */}
       <View style={styles.footer}>
         <TouchableOpacity
@@ -61,9 +104,7 @@ export default function Prizes() {
           onPress={() => navigation.navigate("HomeScreen")}
         >
           <Ionicons name="library-outline" size={24} color="#fff" />
-          <Text style={styles.footerButtonText} color="#fff">
-            Library
-          </Text>
+          <Text style={styles.footerButtonText}>Library</Text>
         </TouchableOpacity>
 
         <TouchableOpacity
@@ -72,149 +113,11 @@ export default function Prizes() {
         >
           <Ionicons name="diamond-outline" size={24} color="#FF9149" />
           <Text
-            style={[(styles.footerButtonText, styles.activeFooterButtonText)]}
-            color="#FF9149"
+            style={[styles.footerButtonText, styles.activeFooterButtonText]}
           >
             Prizes
           </Text>
         </TouchableOpacity>
-        {/* Navigation Menu Modal */}
-        <Modal
-          visible={isMenuOpen}
-          transparent={true}
-          animationType="none"
-          onRequestClose={() => handleMenuPress()}
-        >
-          <View style={styles.modalOverlay}>
-            <TouchableOpacity
-              style={styles.modalBackground}
-              activeOpacity={1}
-              onPress={() => handleMenuPress()}
-            />
-            <Animated.View
-              style={[
-                styles.menuContainer,
-                { transform: [{ translateX: slideAnim }] },
-              ]}
-            >
-              <View style={styles.titleSection}>
-                <Text style={styles.menuTitle}>ELLA</Text>
-                <Text style={styles.menuSubtitle}>Your English Buddy</Text>
-              </View>
-
-              <View style={styles.spacing} />
-
-              <View style={styles.horizontalLine} />
-
-              <TouchableOpacity
-                style={[styles.userSection, { paddingHorizontal: 20 }]}
-                onPress={() => {
-                  // User settings logic will be added later
-                  console.log("User settings pressed");
-                }}
-              >
-                <View style={styles.userSettings}>
-                  <Image
-                    source={characterImages[currUser.character]}
-                    style={styles.userAvatar}
-                  />
-                </View>
-                <View style={styles.userInfo}>
-                  <Text style={styles.userName}>{currUser.name}</Text>
-                  <Text style={styles.userRole}>{currUser.role}</Text>
-                </View>
-              </TouchableOpacity>
-
-              <View style={styles.horizontalLine} />
-
-              <TouchableOpacity
-                style={styles.menuButton}
-                onPress={() => {
-                  console.log("Settings pressed");
-                }}
-              >
-                <Ionicons name="settings-outline" size={24} color="#333" />
-                <Text style={styles.menuButtonText}>Settings</Text>
-              </TouchableOpacity>
-
-              <TouchableOpacity
-                style={styles.menuButton}
-                onPress={() => {
-                  console.log("Enroll to class pressed");
-                }}
-              >
-                <Ionicons name="add-circle-outline" size={24} color="#333" />
-                <Text style={styles.menuButtonText}>Enroll to class</Text>
-              </TouchableOpacity>
-
-              <TouchableOpacity
-                style={styles.menuButton}
-                onPress={() => {
-                  console.log("Contact us pressed");
-                }}
-              >
-                <Ionicons name="chatbubble-outline" size={24} color="#333" />
-                <Text style={styles.menuButtonText}>Contact us</Text>
-              </TouchableOpacity>
-
-              <View style={styles.horizontalLine} />
-
-              <TouchableOpacity
-                style={styles.menuButton}
-                onPress={() => {
-                  console.log("About ELLA pressed");
-                }}
-              >
-                <Ionicons name="people-outline" size={24} color="#333" />
-                <Text style={styles.menuButtonText}>About ELLA</Text>
-              </TouchableOpacity>
-
-              <View style={styles.exitButtonContainer}>
-                <TouchableOpacity
-                  style={styles.exitButton}
-                  onPress={() => setIsExitDialogOpen(true)}
-                >
-                  <Ionicons name="exit-outline" size={16} color="#fff" />
-                  <Text style={styles.exitButtonText}>Exit</Text>
-                </TouchableOpacity>
-              </View>
-            </Animated.View>
-          </View>
-        </Modal>
-
-        {/* Exit Confirmation Dialog */}
-        <Modal
-          visible={isExitDialogOpen}
-          transparent={true}
-          animationType="fade"
-          onRequestClose={handleExitDialogClose}
-        >
-          <View style={styles.exitDialogOverlay}>
-            <View style={styles.exitDialogContainer}>
-              <Text style={styles.exitDialogTitle}>Stop Reading?</Text>
-
-              <View style={styles.exitDialogButtons}>
-                <TouchableOpacity
-                  style={styles.exitDialogButtonYes}
-                  onPress={handleExitApp}
-                >
-                  <Ionicons name="checkmark" size={20} color="#fff" />
-                  <Text style={styles.exitDialogButtonText}>Yes</Text>
-                </TouchableOpacity>
-
-                <TouchableOpacity
-                  style={styles.exitDialogButtonNo}
-                  onPress={handleExitDialogClose}
-                >
-                  <Ionicons name="close" size={20} color="#fff" />
-                  <Text style={styles.exitDialogButtonText} color="#fff">
-                    No
-                  </Text>
-                </TouchableOpacity>
-              </View>
-            </View>
-          </View>
-        </Modal>
       </View>
     </View>
   );
@@ -269,10 +172,10 @@ const styles = StyleSheet.create({
   badgeContainer: {
     flexDirection: "row",
     alignItems: "center",
-    backgroundColor: "rgba(0, 0, 0, 0.2)", // translucent dark blue
+    backgroundColor: "rgba(0, 0, 0, 0.2)",
     borderColor: "white",
     borderWidth: 1,
-    borderRadius: 50, // makes it pill-shaped
+    borderRadius: 50,
     paddingVertical: 1,
     paddingHorizontal: 10,
     marginRight: 10,
@@ -295,7 +198,7 @@ const styles = StyleSheet.create({
   contentText: {
     fontFamily: "Poppins",
     fontSize: 18,
-    color: "#fff",
+    color: "#000",
     textAlign: "center",
   },
   footer: {
@@ -315,9 +218,7 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     paddingHorizontal: 20,
   },
-  activeFooterButton: {
-    // Active state styling
-  },
+  activeFooterButton: {},
   footerButtonText: {
     fontFamily: "Poppins",
     fontSize: 12,

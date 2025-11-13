@@ -9,14 +9,18 @@ import {
 
 import { Ionicons } from "@expo/vector-icons";
 import { Image } from "expo-image";
+import { Alert } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 
 export default function SignUp() {
   const navigation = useNavigation();
   const [name, setName] = useState("");
-  
 
   const handleNameEntry = () => {
+    if (!name.trim()) {
+      Alert.alert("Error!", "Please enter your name!");
+      return; // Stop the function from continuing
+    }
     console.log("Name entered:", name);
     //backend part of saving a user's name.
     navigation.navigate("RoleSelect", { userName: name });
@@ -29,7 +33,7 @@ export default function SignUp() {
         style={styles.closeButton}
         onPress={() => navigation.goBack()}
       >
-        <Ionicons name="close" size={32} color="#fff" />
+        <Ionicons name="arrow-back" size={32} color="#fff" />
       </TouchableOpacity>
 
       <Text style={styles.title}>What's your {"\n"} Name?</Text>
