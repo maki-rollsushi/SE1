@@ -22,6 +22,7 @@ export function getRecommendedBooks(user) {
   // Teacher and student uploads will always be fully shown
   const teacherMaterials = books.filter((b) => b.source === "Teacher");
   const studentUploads = books.filter((b) => b.source === "user");
+  const appBooks = books.filter((b) => b.source === "app");
 
-  return { recommended, teacherMaterials, studentUploads };
+  return { recommended, teacherMaterials, studentUploads, appBooks };
 }

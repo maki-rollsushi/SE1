@@ -11,7 +11,7 @@ import { useFonts } from "expo-font";
 import { Ionicons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 import { Image } from "expo-image";
-import { users } from "../Data/data";
+import { Students } from "../Data/data";
 import Sidebar from "../components/Sidebar"; // import your Sidebar component
 
 export default function Prizes() {
@@ -24,7 +24,7 @@ export default function Prizes() {
   });
 
   const navigation = useNavigation();
-  const currUser = users[0];
+  const currUser = Students[0];
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isExitDialogOpen, setIsExitDialogOpen] = useState(false);
   const slideAnim = useState(new Animated.Value(-300))[0]; // starting X value
@@ -60,7 +60,7 @@ export default function Prizes() {
       <View style={styles.header}>
         <TouchableOpacity
           onPress={() => {
-            handleMenuPress() ;
+            handleMenuPress();
           }}
           style={styles.avatarContainer}
         >

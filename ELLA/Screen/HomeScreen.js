@@ -11,6 +11,7 @@ import {
   Dimensions,
   BackHandler,
   Alert,
+  ScrollView,
 } from "react-native";
 import { useFonts } from "expo-font";
 import { Image } from "expo-image";
@@ -52,14 +53,12 @@ export default function HomeScreen() {
 
   const handleMenuPress = () => {
     if (isMenuOpen) {
-      // Close menu - slide out to left
       Animated.timing(slideAnim, {
         toValue: -290,
         duration: 300,
         useNativeDriver: true,
       }).start(() => setIsMenuOpen(false));
     } else {
-      // Open menu - slide in from left
       setIsMenuOpen(true);
       Animated.timing(slideAnim, {
         toValue: 0,
@@ -131,10 +130,82 @@ export default function HomeScreen() {
           <Text style={styles.readText}>Let's Read!</Text>
           <View style={styles.readTextSpacing} />
         </View>
-        <TouchableOpacity style={styles.bookCard}>
-          <RNImage source={{ uri: currBook.cover }} style={styles.bookImage} />
-          <Text style={styles.bookTitle}>{currBook.title}</Text>
-        </TouchableOpacity>
+
+        <Sidebar
+          isMenuOpen={isMenuOpen}
+          slideAnim={slideAnim}
+          handleMenuPress={handleMenuPress}
+          currUser={currUser}
+          characterImages={characterImages}
+          setIsExitDialogOpen={setIsExitDialogOpen}
+        />
+
+        {/* Catalog section */}
+
+        <ScrollView contentContainerStyle={styles.scrollContainer}>
+          <View style={styles.lastRead}>
+            <TouchableOpacity style={styles.bookCards}>
+              <RNImage
+                source={{ uri: currBook.cover }}
+                style={styles.bookImages}
+              />
+              <Text style={styles.bookTitles}>{currBook.title}</Text>
+            </TouchableOpacity>
+          </View>
+          <View style={styles.catalog}>
+            <Text style={styles.catalogTitle}>Recommended</Text>
+            <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+              {recommended.map((book) => (
+                <View key={book.bookId} style={styles.bookCard}>
+                  <RNImage
+                    source={{ uri: book.cover }}
+                    style={styles.bookImage}
+                  />
+                  <Text style={styles.bookTitle}>{book.title}</Text>
+                </View>
+              ))}
+            </ScrollView>
+
+            <Text style={styles.catalogTitle}>Teacher Uploads</Text>
+            <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+              {teacherMaterials.map((book) => (
+                <View key={book.bookId} style={styles.bookCard}>
+                  <RNImage
+                    source={{ uri: book.cover }}
+                    style={styles.bookImage}
+                  />
+                  <Text style={styles.bookTitle}>{book.title}</Text>
+                </View>
+              ))}
+            </ScrollView>
+
+            <Text style={styles.catalogTitle}>Student Uploads</Text>
+            <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+              {studentUploads.map((book) => (
+                <View key={book.bookId} style={styles.bookCard}>
+                  <RNImage
+                    source={{ uri: book.cover }}
+                    style={styles.bookImage}
+                  />
+                  <Text style={styles.bookTitle}>{book.title}</Text>
+                </View>
+              ))}
+            </ScrollView>
+
+            <Text style={styles.catalogTitle}>Books from Ella</Text>
+            <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+              {appBooks.map((book) => (
+                <View key={book.bookId} style={styles.bookCard}>
+                  <RNImage
+                    source={{ uri: book.cover }}
+                    style={styles.bookImage}
+                  />
+                  <Text style={styles.bookTitle}>{book.title}</Text>
+                </View>
+              ))}
+            </ScrollView>
+          </View>
+        </ScrollView>
 
         {/* Footer */}
         <View style={styles.footer}>
@@ -168,15 +239,6 @@ export default function HomeScreen() {
             </Text>
           </TouchableOpacity>
         </View>
-
-        <Sidebar
-          isMenuOpen={isMenuOpen}
-          slideAnim={slideAnim}
-          handleMenuPress={handleMenuPress}
-          currUser={currUser}
-          characterImages={characterImages}
-          setIsExitDialogOpen={setIsExitDialogOpen}
-        />
 
         {/* Exit Confirmation Dialog */}
         <Modal
@@ -309,7 +371,10 @@ const styles = StyleSheet.create({
     fontSize: 10,
     fontFamily: "Mochi",
   },
-  bookCard: {
+  lastRead: {
+    alignItems: "center",
+  },
+  bookCards: {
     borderRadius: 15,
     width: "60%",
     alignItems: "center",
@@ -317,16 +382,77 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.5,
     shadowRadius: 5,
   },
-  bookImage: {
+  bookImages: {
     width: "100%",
     height: 150,
     borderRadius: 10,
   },
-  bookTitle: {
+  bookImage: {
+    width: "100%",
+    height: 150,
+  },
+  bookTitles: {
     fontFamily: "Poppins",
     fontSize: 16,
     color: "#000000ff",
   },
+  bookTitle: {
+    fontFamily: "Poppins",
+    fontSize: 10,
+    color: "#000000ff",
+  },
+  scrollContainer: {
+    paddingBottom: 100, // ✅ Prevent content from being hidden by footer
+  },
+  catalog: {
+    flex: 1,
+    width: "100%",
+    paddingHorizontal: 20,
+    marginTop: 10,
+  },
+  section: {
+    marginBottom: 25,
+  },
+  catalogTitle: {
+    fontFamily: "Mochi",
+    fontSize: 16,
+    color: "#FF9149",
+    marginBottom: 10,
+    textAlign: "left",
+  },
+  carousel: {
+    flexDirection: "row",
+    gap: 10,
+  },
+  bookCard: {
+    width: 140,
+    height: 170,
+    backgroundColor: "#fff",
+    borderRadius: 10,
+    overflow: "hidden",
+    alignItems: "center",
+    shadowColor: "#000",
+    shadowOpacity: 0.2,
+    shadowRadius: 1,
+    shadowOffset: { width: 0, height: 1 },
+    elevation: 3,
+    margin: 10,
+  },
+  bookCover: {
+    width: "100%",
+    height: 120,
+    borderTopLeftRadius: 10,
+    borderTopRightRadius: 10,
+  },
+  bookLabel: {
+    fontFamily: "Poppins",
+    fontSize: 12,
+    color: "#333",
+    textAlign: "center",
+    paddingHorizontal: 5,
+    marginTop: 5,
+  },
+
   footer: {
     position: "absolute",
     bottom: 0,
