@@ -26,3 +26,23 @@ export function getRecommendedBooks(user) {
 
   return { recommended, teacherMaterials, studentUploads, appBooks };
 }
+
+//return last unread book
+export function getLastUnfinishedBook(user) {
+  if (!user.progress || user.progress.length === 0) return null;
+
+  // 1️⃣ Find all unfinished books
+  const unfinished = user.progress.filter(
+    (p) => p.sentencesRead < p.totalSentences
+  );
+
+  if (unfinished.length > 0) {
+    // return the latest unfinished book (last in array)
+    const latestUnfinished = unfinished[unfinished.length - 1];
+    return books.find((b) => b.bookId === latestUnfinished.bookId) || null;
+  }
+
+  // 2️⃣ If no unfinished books: return last read book (most recent)
+  const lastReadProgress = user.progress[user.progress.length - 1];
+  return books.find((b) => b.bookId === lastReadProgress.bookId) || null;
+}

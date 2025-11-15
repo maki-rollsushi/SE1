@@ -12,6 +12,8 @@ import HomeScreen from "./Screen/HomeScreen";
 import AvatarSelect from "./Screen/avatarSelect";
 import AvatarName from "./Screen/AvatarName";
 import Prizes from "./Screen/Prizes";
+import ReadBook from "./Screen/ReadBook";
+import OpenBook from "./Screen/OpenBook";
 
 const Stack = createNativeStackNavigator();
 
@@ -43,6 +45,8 @@ export default function App() {
             <Stack.Screen name="AvatarSelect" component={AvatarSelect} />
             <Stack.Screen name="AvatarName" component={AvatarName} />
             <Stack.Screen name="HomeScreen" component={HomeScreen} />
+            <Stack.Screen name="ReadBook" component={ReadBook} />
+            <Stack.Screen name="OpenBook" component={OpenBook} />
             <Stack.Screen name="Prizes" component={Prizes} />
           </Stack.Navigator>
         </SafeAreaView>

@@ -17,11 +17,13 @@ import { useFonts } from "expo-font";
 import { Image } from "expo-image";
 import { Ionicons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
-import { Students, books } from "../Data/data";
 import { ImageBackground } from "react-native";
 import Sidebar from "../components/Sidebar";
-import { getRecommendedBooks } from "../libUtil";
+import { getLastUnfinishedBook, getRecommendedBooks } from "../libUtil";
 import { get } from "react-native/Libraries/TurboModule/TurboModuleRegistry";
+
+//This is for the backend Database.
+import { Students, books } from "../Data/data";
 
 export default function HomeScreen() {
   const [fontsLoaded] = useFonts({
@@ -32,16 +34,12 @@ export default function HomeScreen() {
     Mochi: require("../assets/fonts/MochiyPopOne.ttf"),
   });
 
-  const currUser = Students[0];
-  const currBook = books[0];
+  const currUser = Students[0]; //change this if we have a backend.
 
   const { recommended, teacherMaterials, studentUploads, appBooks } =
     getRecommendedBooks(currUser);
 
-  console.log("Recommended:", recommended);
-  console.log("Teacher Materials:", teacherMaterials);
-  console.log("Student Uploads:", studentUploads);
-  console.log("App Books:", appBooks);
+  const currBook = getLastUnfinishedBook(currUser);
 
   const currRoute = 1;
 
@@ -96,6 +94,10 @@ export default function HomeScreen() {
     setIsExitDialogOpen(false);
   };
 
+  const handleOpenBook = (book, currUser) => {
+    navigation.navigate("OpenBook", { book, currUser });
+  };
+
   return (
     <ImageBackground
       source={require("../assets/backgrounds/page.png")}
@@ -126,11 +128,11 @@ export default function HomeScreen() {
             <Text style={styles.amountText}>{currUser.points}</Text>
           </View>
         </View>
+        <View style={{ height: 30 }} />
         <View styles={styles.content}>
           <Text style={styles.readText}>Let's Read!</Text>
           <View style={styles.readTextSpacing} />
         </View>
-
         <Sidebar
           isMenuOpen={isMenuOpen}
           slideAnim={slideAnim}
@@ -139,69 +141,92 @@ export default function HomeScreen() {
           characterImages={characterImages}
           setIsExitDialogOpen={setIsExitDialogOpen}
         />
-
         {/* Catalog section */}
-
+        <View style={{ height: 60 }} />
         <ScrollView contentContainerStyle={styles.scrollContainer}>
           <View style={styles.lastRead}>
-            <TouchableOpacity style={styles.bookCards}>
+            <TouchableOpacity
+              style={styles.firstBook}
+              onPress={() => handleOpenBook(currBook, currUser)}
+            >
               <RNImage
                 source={{ uri: currBook.cover }}
                 style={styles.bookImages}
               />
-              <Text style={styles.bookTitles}>{currBook.title}</Text>
+              <Text style={styles.bookTitle}>{currBook.title}</Text>
             </TouchableOpacity>
           </View>
+
           <View style={styles.catalog}>
+            {/* Recommended */}
             <Text style={styles.catalogTitle}>Recommended</Text>
             <ScrollView horizontal showsHorizontalScrollIndicator={false}>
               {recommended.map((book) => (
-                <View key={book.bookId} style={styles.bookCard}>
+                <TouchableOpacity
+                  key={book.bookId}
+                  style={styles.bookCard}
+                  onPress={() => handleOpenBook(book, currUser)}
+                >
                   <RNImage
                     source={{ uri: book.cover }}
                     style={styles.bookImage}
                   />
-                  <Text style={styles.bookTitle}>{book.title}</Text>
-                </View>
+                  <Text style={styles.bookLabel}>{book.title}</Text>
+                </TouchableOpacity>
               ))}
             </ScrollView>
 
+            {/* Teacher Uploads */}
             <Text style={styles.catalogTitle}>Teacher Uploads</Text>
             <ScrollView horizontal showsHorizontalScrollIndicator={false}>
               {teacherMaterials.map((book) => (
-                <View key={book.bookId} style={styles.bookCard}>
+                <TouchableOpacity
+                  key={book.bookId}
+                  style={styles.bookCard}
+                  onPress={() => handleOpenBook(book, currUser)}
+                >
                   <RNImage
                     source={{ uri: book.cover }}
                     style={styles.bookImage}
                   />
-                  <Text style={styles.bookTitle}>{book.title}</Text>
-                </View>
+                  <Text style={styles.bookLabel}>{book.title}</Text>
+                </TouchableOpacity>
               ))}
             </ScrollView>
 
+            {/* Student Uploads */}
             <Text style={styles.catalogTitle}>Student Uploads</Text>
             <ScrollView horizontal showsHorizontalScrollIndicator={false}>
               {studentUploads.map((book) => (
-                <View key={book.bookId} style={styles.bookCard}>
+                <TouchableOpacity
+                  key={book.bookId}
+                  style={styles.bookCard}
+                  onPress={() => handleOpenBook(book, currUser)}
+                >
                   <RNImage
                     source={{ uri: book.cover }}
                     style={styles.bookImage}
                   />
-                  <Text style={styles.bookTitle}>{book.title}</Text>
-                </View>
+                  <Text style={styles.bookLabel}>{book.title}</Text>
+                </TouchableOpacity>
               ))}
             </ScrollView>
 
+            {/* Books from Ella */}
             <Text style={styles.catalogTitle}>Books from Ella</Text>
             <ScrollView horizontal showsHorizontalScrollIndicator={false}>
               {appBooks.map((book) => (
-                <View key={book.bookId} style={styles.bookCard}>
+                <TouchableOpacity
+                  key={book.bookId}
+                  style={styles.bookCard}
+                  onPress={() => handleOpenBook(book, currUser)}
+                >
                   <RNImage
                     source={{ uri: book.cover }}
                     style={styles.bookImage}
                   />
-                  <Text style={styles.bookTitle}>{book.title}</Text>
-                </View>
+                  <Text style={styles.bookLabel}>{book.title}</Text>
+                </TouchableOpacity>
               ))}
             </ScrollView>
           </View>
@@ -227,7 +252,7 @@ export default function HomeScreen() {
 
           <TouchableOpacity
             style={styles.footerButton}
-            onPress={() => navigation.navigate("Prizes")}
+            onPress={() => navigation.navigate("Prizes", currUser)}
           >
             <Ionicons
               name="diamond-outline"
@@ -239,7 +264,6 @@ export default function HomeScreen() {
             </Text>
           </TouchableOpacity>
         </View>
-
         {/* Exit Confirmation Dialog */}
         <Modal
           visible={isExitDialogOpen}
@@ -374,35 +398,28 @@ const styles = StyleSheet.create({
   lastRead: {
     alignItems: "center",
   },
-  bookCards: {
+  firstBook: {
     borderRadius: 15,
     width: "60%",
     alignItems: "center",
-    shadowColor: "#000",
-    shadowOpacity: 0.5,
-    shadowRadius: 5,
   },
   bookImages: {
     width: "100%",
-    height: 150,
+    height: 130,
     borderRadius: 10,
   },
   bookImage: {
     width: "100%",
-    height: 150,
+    height: 130,
+    borderRadius: 10,
   },
-  bookTitles: {
+  bookTitle: {
     fontFamily: "Poppins",
     fontSize: 16,
     color: "#000000ff",
   },
-  bookTitle: {
-    fontFamily: "Poppins",
-    fontSize: 10,
-    color: "#000000ff",
-  },
   scrollContainer: {
-    paddingBottom: 100, // ✅ Prevent content from being hidden by footer
+    paddingBottom: 100,
   },
   catalog: {
     flex: 1,
@@ -425,34 +442,25 @@ const styles = StyleSheet.create({
     gap: 10,
   },
   bookCard: {
-    width: 140,
-    height: 170,
-    backgroundColor: "#fff",
+    width: 110,
+    height: 160,
     borderRadius: 10,
     overflow: "hidden",
     alignItems: "center",
-    shadowColor: "#000",
-    shadowOpacity: 0.2,
-    shadowRadius: 1,
-    shadowOffset: { width: 0, height: 1 },
-    elevation: 3,
     margin: 10,
   },
   bookCover: {
     width: "100%",
     height: 120,
-    borderTopLeftRadius: 10,
-    borderTopRightRadius: 10,
   },
   bookLabel: {
     fontFamily: "Poppins",
-    fontSize: 12,
-    color: "#333",
+    fontSize: 10,
+    color: "#000000ff",
     textAlign: "center",
     paddingHorizontal: 5,
     marginTop: 5,
   },
-
   footer: {
     position: "absolute",
     bottom: 0,

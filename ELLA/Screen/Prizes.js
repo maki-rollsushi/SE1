@@ -9,10 +9,10 @@ import {
 } from "react-native";
 import { useFonts } from "expo-font";
 import { Ionicons } from "@expo/vector-icons";
-import { useNavigation } from "@react-navigation/native";
 import { Image } from "expo-image";
 import { Students } from "../Data/data";
-import Sidebar from "../components/Sidebar"; // import your Sidebar component
+import Sidebar from "../components/Sidebar";
+import { useNavigation, useRoute } from "@react-navigation/native";
 
 export default function Prizes() {
   const [fontsLoaded] = useFonts({
@@ -24,7 +24,8 @@ export default function Prizes() {
   });
 
   const navigation = useNavigation();
-  const currUser = Students[0];
+  const route = useRoute();
+  const currUser = route.params || {};
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isExitDialogOpen, setIsExitDialogOpen] = useState(false);
   const slideAnim = useState(new Animated.Value(-300))[0]; // starting X value
